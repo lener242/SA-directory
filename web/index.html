@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>⚖️ Справочник законов | Сан-Андреас</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-inner">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" id="menuToggleBtn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12h18M3 6h18M3 18h18"/>
+                        </svg>
+                    </button>
+                    <div class="logo">
+                        <span class="logo-icon">⚖️</span>
+                        <div>
+                            <h1>Сан-Андреас</h1>
+                            <p>Справочник законов</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-wrapper">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="10" cy="10" r="7"></circle>
+                        <path d="M21 21L15 15"></path>
+                    </svg>
+                    <input type="text" id="globalSearch" class="search-input" placeholder="🔍 Глобальный поиск по всем разделам...">
+                </div>
+            </div>
+        </header>
+
+        <div class="layout">
+            <!-- Desktop Sidebar -->
+            <aside class="sidebar desktop-only">
+                <nav class="sidebar-nav" id="desktopSidebarNav"></nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="content-header">
+                    <h2 class="content-title" id="sectionTitle">⚖️ Уголовный кодекс</h2>
+                    <div class="stats" id="stats"></div>
+                </div>
+
+                <!-- Глобальный поиск: результаты -->
+                <div id="globalSearchResults" class="global-search-results" style="display: none;">
+                    <div class="global-search-header">
+                        <span>🔍 Результаты глобального поиска</span>
+                        <button class="clear-search-btn" id="clearSearchBtn">✕ Очистить</button>
+                    </div>
+                    <div id="globalSearchList" class="articles-list"></div>
+                </div>
+
+                <!-- Фильтры (только для УК) -->
+                <div class="filters-bar" id="filtersBar"></div>
+
+                <!-- Основной список статей -->
+                <div class="articles-list" id="articlesList"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobile Sidebar (выезжающее меню) -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="mobile-sidebar-header">
+            <span class="mobile-sidebar-title">📚 Меню</span>
+            <button class="mobile-sidebar-close" id="closeSidebarBtn">✕</button>
+        </div>
+        <nav class="sidebar-nav" id="mobileSidebarNav"></nav>
+    </div>
+
+    <!-- Data Scripts (все файлы данных) -->
+    <script src="js/data-uk.js"></script>
+    <script src="js/data-uk-general.js"></script>
+    <script src="js/data-ak.js"></script>
+    <script src="js/data-dk.js"></script>
+    <script src="js/data-pk.js"></script>
+    <script src="js/data-weapon.js"></script>
+    <script src="js/data-gov-rules.js"></script>
+    <script src="js/data-frb.js"></script>
+    <script src="js/data-frb-charter.js"></script>
+    <script src="js/data-ord.js"></script>
+    <script src="js/data-closed-areas.js"></script>
+    <script src="js/data-theory.js"></script>
+    <script src="js/data-rules.js"></script>
+    <script src="js/data-robbery.js"></script>
+    <script src="js/data-events.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+

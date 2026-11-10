@@ -1,0 +1,390 @@
+// ===== DATA MAPPING =====
+const SECTIONS = {
+    uk: {
+        title: '⚖️ Уголовный кодекс',
+        data: () => UK_DATA || [],
+        hasFilters: true
+    },
+    'uk-general': {
+        title: '📖 Общая часть УК',
+        data: () => UK_GENERAL_DATA || [],
+        hasFilters: false
+    },
+    ak: {
+        title: '📋 Административный кодекс',
+        data: () => AK_DATA || [],
+        hasFilters: false
+    },
+    dk: {
+        title: '🚗 Дорожный кодекс',
+        data: () => DK_DATA || [],
+        hasFilters: false
+    },
+    pk: {
+        title: '📜 Процессуальный кодекс',
+        data: () => PK_DATA || [],
+        hasFilters: false
+    },
+    weapon: {
+        title: '🔫 Справочник оружия',
+        data: () => WEAPON_DATA || [],
+        hasFilters: false
+    },
+    'gov-rules': {
+        title: '📋 Правила гос.структур',
+        data: () => GOV_RULES_DATA || [],
+        hasFilters: false
+    },
+    frb: {
+        title: '🕵️ ФРБ (Закон)',
+        data: () => FRB_DATA || [],
+        hasFilters: false
+    },
+    'frb-charter': {
+        title: '📜 Устав ФРБ',
+        data: () => FRB_CHARTER_DATA || [],
+        hasFilters: false
+    },
+    ord: {
+        title: '🕵️‍♂️ Закон об ОРД',
+        data: () => ORD_DATA || [],
+        hasFilters: false
+    },
+    'closed-areas': {
+        title: '🚫 Закрытые территории',
+        data: () => CLOSED_AREAS_DATA || [],
+        hasFilters: false
+    },
+    theory: {
+        title: '🎓 Терминология',
+        data: () => THEORY_DATA || [],
+        hasFilters: false
+    },
+    rules: {
+        title: '📜 Правила проекта',
+        data: () => RULES_DATA || [],
+        hasFilters: false
+    },
+    robbery: {
+        title: '🚨 Ограбления и похищения',
+        data: () => ROBBERY_DATA || [],
+        hasFilters: false
+    },
+    events: {
+        title: '💣 Мероприятия',
+        data: () => EVENTS_DATA || [],
+        hasFilters: false
+    }
+};
+
+// Navigation items
+const NAV_ITEMS = [
+    { group: '📚 Кодексы', items: [
+        { id: 'uk', icon: '⚖️', name: 'Уголовный кодекс' },
+        { id: 'uk-general', icon: '📖', name: 'Общая часть УК' },
+        { id: 'ak', icon: '📋', name: 'Административный' },
+        { id: 'dk', icon: '🚗', name: 'Дорожный' },
+        { id: 'pk', icon: '📜', name: 'Процессуальный' }
+    ] },
+    { group: '🔍 Справочники', items: [
+        { id: 'weapon', icon: '🔫', name: 'Оружие' },
+        { id: 'gov-rules', icon: '📋', name: 'Гос.структуры' },
+        { id: 'frb', icon: '🕵️', name: 'ФРБ (Закон)' },
+        { id: 'frb-charter', icon: '📜', name: 'Устав ФРБ' },
+        { id: 'ord', icon: '🕵️‍♂️', name: 'Закон об ОРД' }
+    ] },
+    { group: '⚠️ Особое', items: [
+        { id: 'closed-areas', icon: '🚫', name: 'Закрытые территории' },
+        { id: 'theory', icon: '🎓', name: 'Терминология' },
+        { id: 'rules', icon: '📜', name: 'Правила проекта' },
+        { id: 'robbery', icon: '🚨', name: 'Ограбления' },
+        { id: 'events', icon: '💣', name: 'Мероприятия' }
+    ] }
+];
+
+let currentSection = 'uk';
+let currentFilter = 'all';
+let searchQuery = '';
+
+// ===== BUILD SIDEBARS =====
+function buildSidebars() {
+    const desktopNav = document.getElementById('desktopSidebarNav');
+    const mobileNav = document.getElementById('mobileSidebarNav');
+    
+    let html = '';
+    for (const group of NAV_ITEMS) {
+        html += `<div class="nav-group">`;
+        html += `<div class="nav-group-title">${group.group}</div>`;
+        for (const item of group.items) {
+            html += `
+                <button class="nav-item" data-section="${item.id}">
+                    <span class="nav-icon">${item.icon}</span>
+                    <span>${item.name}</span>
+                </button>
+            `;
+        }
+        html += `</div>`;
+    }
+    
+    if (desktopNav) desktopNav.innerHTML = html;
+    if (mobileNav) mobileNav.innerHTML = html;
+    
+    // Add event listeners to all nav items
+    document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+            changeSection(btn.dataset.section);
+            closeMobileMenu();
+        });
+    });
+}
+
+// ===== MOBILE MENU =====
+function openMobileMenu() {
+    document.getElementById('mobileSidebar').classList.add('open');
+    document.getElementById('mobileMenuOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+    document.getElementById('mobileSidebar').classList.remove('open');
+    document.getElementById('mobileMenuOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// ===== TOGGLE DETAILS =====
+function toggleDetails(cardId) {
+    const details = document.getElementById(`details-${cardId}`);
+    if (details) {
+        details.classList.toggle('open');
+    }
+}
+
+// ===== RENDER FUNCTIONS =====
+function render() {
+    const section = SECTIONS[currentSection];
+    if (!section) return;
+
+    document.getElementById('sectionTitle').textContent = section.title;
+    renderArticles(section);
+    renderFilters(section);
+    updateStats(section);
+    
+    // Update active state in navigation
+    document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.section === currentSection) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+function renderArticles(section) {
+    const container = document.getElementById('articlesList');
+    let items = section.data();
+
+    if (!items || items.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <div class="empty-title">Нет данных</div>
+                <p>Раздел временно недоступен</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Apply filters (only for UK)
+    if (section.hasFilters && currentFilter !== 'all') {
+        if (currentFilter === 'sud') items = items.filter(i => i.sud);
+        else if (currentFilter === 'sh') items = items.filter(i => i.fine);
+        else if (currentFilter === '5star') items = items.filter(i => i.stars === '⭐⭐⭐⭐⭐');
+    }
+
+    // Search
+    if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        items = items.filter(item => {
+            const article = (item.article || '').toLowerCase();
+            const name = (item.name || item.title || '').toLowerCase();
+            const desc = (item.desc || '').toLowerCase();
+            return article.includes(query) || name.includes(query) || desc.includes(query);
+        });
+    }
+
+    if (items.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">🔍</div>
+                <div class="empty-title">Ничего не найдено</div>
+                <p>Попробуйте изменить поисковый запрос или фильтр</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = items.map((item, idx) => {
+        const cardId = `${currentSection}-${idx}`;
+        const stars = item.stars ? `<div class="card-stars">${item.stars}</div>` : '';
+        const penalty = item.punishment ? `<span class="card-penalty">⏱️ ${item.punishment}</span>` : '';
+        const fine = item.fine ? `<span class="card-fine">💰 ${item.fine}</span>` : '';
+        
+        // Build details HTML
+        let detailsHtml = '';
+        
+        if (item.fullDesc) {
+            detailsHtml += `
+                <div class="detail-section">
+                    <div class="detail-label">📖 Полное описание</div>
+                    <div class="detail-content">${item.fullDesc}</div>
+                </div>
+            `;
+        }
+        
+        if (item.important) {
+            detailsHtml += `
+                <div class="detail-section">
+                    <div class="detail-label">⚠️ Важно</div>
+                    <div class="detail-content">${item.important}</div>
+                </div>
+            `;
+        }
+        
+        if (item.items && item.items.length > 0) {
+            detailsHtml += `
+                <div class="detail-section">
+                    <div class="detail-label">📋 Содержание</div>
+                    <div class="detail-content">
+                        ${item.items.map(i => `<p>• ${i}</p>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        if (item.who) {
+            detailsHtml += `
+                <div class="detail-section">
+                    <div class="detail-label">👮 Кто применяет</div>
+                    <div class="detail-content">${item.who}</div>
+                </div>
+            `;
+        }
+        
+        if (!detailsHtml && item.desc) {
+            detailsHtml = `
+                <div class="detail-section">
+                    <div class="detail-label">📖 Описание</div>
+                    <div class="detail-content">${item.desc}</div>
+                </div>
+            `;
+        }
+        
+        if (!detailsHtml) {
+            detailsHtml = `
+                <div class="detail-section">
+                    <div class="detail-content">Нет дополнительной информации</div>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="article-card">
+                <div class="card-header" onclick="toggleDetails('${cardId}')">
+                    <div class="card-info">
+                        <div class="card-code">${item.article || item.number || 'Информация'}</div>
+                        <div class="card-title">${item.name || item.title || ''}</div>
+                        <div class="card-desc">${item.desc || (item.items ? item.items[0] : '')}</div>
+                        <div class="card-footer">
+                            ${penalty}
+                            ${fine}
+                        </div>
+                    </div>
+                    ${stars}
+                </div>
+                <div class="card-details" id="details-${cardId}">
+                    ${detailsHtml}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderFilters(section) {
+    const container = document.getElementById('filtersBar');
+    
+    if (!section.hasFilters) {
+        container.innerHTML = '';
+        return;
+    }
+
+    container.innerHTML = `
+        <button class="filter-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')">📌 Все</button>
+        <button class="filter-btn ${currentFilter === 'sud' ? 'active' : ''}" onclick="setFilter('sud')">⚠️ Влечёт судимость</button>
+        <button class="filter-btn ${currentFilter === 'sh' ? 'active' : ''}" onclick="setFilter('sh')">💰 Со штрафом</button>
+        <button class="filter-btn ${currentFilter === '5star' ? 'active' : ''}" onclick="setFilter('5star')">⭐ 5 звёзд</button>
+    `;
+}
+
+function updateStats(section) {
+    const items = section.data();
+    const statsContainer = document.getElementById('stats');
+    
+    if (!statsContainer) return;
+    
+    let html = `<div class="stat-badge">📄 ${items.length} записей</div>`;
+    
+    if (section.hasFilters && items.length > 0) {
+        const sudCount = items.filter(i => i.sud).length;
+        const fineCount = items.filter(i => i.fine).length;
+        if (sudCount > 0) html += `<div class="stat-badge">⚠️ ${sudCount}</div>`;
+        if (fineCount > 0) html += `<div class="stat-badge">💰 ${fineCount}</div>`;
+    }
+    
+    statsContainer.innerHTML = html;
+}
+
+// ===== FILTER HANDLER =====
+window.setFilter = function(filter) {
+    currentFilter = filter;
+    render();
+};
+
+// ===== SECTION CHANGE =====
+function changeSection(sectionId) {
+    currentSection = sectionId;
+    currentFilter = 'all';
+    searchQuery = '';
+    const searchInput = document.getElementById('globalSearch');
+    if (searchInput) searchInput.value = '';
+    render();
+}
+
+// ===== EXPORT GLOBALS =====
+window.toggleDetails = toggleDetails;
+window.setFilter = setFilter;
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+    // Build sidebars
+    buildSidebars();
+    
+    // Mobile menu handlers
+    const menuBtn = document.getElementById('menuToggleBtn');
+    const closeBtn = document.getElementById('closeSidebarBtn');
+    const overlay = document.getElementById('mobileMenuOverlay');
+    
+    if (menuBtn) menuBtn.addEventListener('click', openMobileMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMobileMenu);
+    if (overlay) overlay.addEventListener('click', closeMobileMenu);
+    
+    // Global search
+    const searchInput = document.getElementById('globalSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            render();
+        });
+    }
+    
+    // Initial render
+    render();
+});
