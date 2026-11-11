@@ -34,7 +34,6 @@ body {
     min-height: 100vh;
 }
 
-/* ===== HEADER ===== */
 .header {
     background: var(--bg-surface);
     border-bottom: 1px solid var(--border);
@@ -129,7 +128,6 @@ body {
     box-shadow: 0 0 0 2px rgba(56, 139, 253, 0.2);
 }
 
-/* ===== LAYOUT ===== */
 .layout {
     display: flex;
     flex: 1;
@@ -139,7 +137,6 @@ body {
     padding: 0 20px;
 }
 
-/* ===== DESKTOP SIDEBAR ===== */
 .sidebar {
     width: 280px;
     background: var(--bg-surface);
@@ -154,7 +151,6 @@ body {
     flex-shrink: 0;
 }
 
-/* ===== MOBILE SIDEBAR ===== */
 .mobile-sidebar {
     position: fixed;
     top: 0;
@@ -220,7 +216,6 @@ body {
     display: block;
 }
 
-/* ===== SIDEBAR NAVIGATION ===== */
 .sidebar-nav {
     padding: 8px 0;
 }
@@ -271,7 +266,6 @@ body {
     width: 24px;
 }
 
-/* ===== MAIN CONTENT ===== */
 .main-content {
     flex: 1;
     padding: 20px 0 40px 0;
@@ -311,7 +305,6 @@ body {
     border: 1px solid var(--border);
 }
 
-/* ===== FILTERS ===== */
 .filters-bar {
     display: flex;
     gap: 8px;
@@ -341,7 +334,6 @@ body {
     color: white;
 }
 
-/* ===== CARDS (ОСНОВНЫЕ СТИЛИ) ===== */
 .card, .pcard, .article-card {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -359,7 +351,6 @@ body {
     border-color: var(--accent-blue);
 }
 
-/* Заголовки карточек */
 .ch, .ph, .card-header {
     padding: 14px 16px;
     cursor: pointer;
@@ -373,7 +364,6 @@ body {
     background: linear-gradient(90deg, var(--bg-elevated) 0%, transparent 100%);
 }
 
-/* Раскрывающийся контент */
 .cb, .pbody, .card-details {
     display: none;
     padding: 0 16px 16px;
@@ -385,7 +375,6 @@ body {
     display: block;
 }
 
-/* Содержимое карточки */
 .card-info {
     flex: 1;
 }
@@ -442,7 +431,6 @@ body {
     color: var(--accent-green);
 }
 
-/* Стрелочка-индикатор раскрытия */
 .card-header::after {
     content: '▼';
     position: absolute;
@@ -459,7 +447,6 @@ body {
     color: var(--accent-blue);
 }
 
-/* ===== ДЕТАЛИ ===== */
 .detail-section {
     margin-top: 16px;
 }
@@ -488,7 +475,6 @@ body {
     margin: 8px 0;
 }
 
-/* Стили для Processual (ПК) */
 .pbody .pr {
     display: flex;
     gap: 12px;
@@ -515,7 +501,6 @@ body {
     flex: 1;
 }
 
-/* Группы (разделы УК) */
 .grp {
     background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
     border-radius: 12px;
@@ -531,7 +516,6 @@ body {
     margin-top: 0;
 }
 
-/* Инфо-строки */
 .ir {
     display: flex;
     justify-content: space-between;
@@ -559,7 +543,6 @@ body {
     line-height: 1.4;
 }
 
-/* Теги */
 .tags {
     display: flex;
     gap: 8px;
@@ -589,7 +572,6 @@ body {
     border-left: 3px solid var(--accent-blue);
 }
 
-/* ===== АНИМИРОВАННАЯ ГРАДИЕНТНАЯ ОБВОДКА ===== */
 @keyframes borderGlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -647,7 +629,6 @@ body {
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
 }
 
-/* ===== ГЛОБАЛЬНЫЙ ПОИСК ===== */
 .global-search-results {
     margin-bottom: 20px;
 }
@@ -699,7 +680,6 @@ body {
     border-top: 1px dashed var(--border);
 }
 
-/* ===== КОНТЕЙНЕРЫ СПИСКОВ С ОТСТУПАМИ (ТОЛЬКО ГЭПЫ, БЕЗ ПЕРЕОПРЕДЕЛЕНИЯ DISPLAY) ===== */
 #uk-list, #uk-general-list, #ak-list, #dk-list, #pk-list,
 #weapon-list, #gov-rules-list, #frb-list, #frb-charter-list,
 #ord-list, #closed-areas-list, #theory-list, #rules-list,
@@ -707,7 +687,6 @@ body {
     gap: 12px;
 }
 
-/* Убираем margin у карточек внутри этих контейнеров */
 #uk-list > *, #uk-general-list > *, #ak-list > *, #dk-list > *,
 #pk-list > *, #weapon-list > *, #gov-rules-list > *,
 #frb-list > *, #frb-charter-list > *, #ord-list > *,
@@ -716,7 +695,6 @@ body {
     margin-bottom: 0;
 }
 
-/* ===== EMPTY STATE ===== */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -734,17 +712,14 @@ body {
     margin-bottom: 8px;
 }
 
-/* ===== UTILITIES ===== */
 .desktop-only { display: block; }
 .mobile-only { display: none; }
 
-/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .header-inner { flex-direction: column; align-items: stretch; }
     .header-left { justify-content: space-between; }
