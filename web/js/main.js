@@ -1,4 +1,4 @@
-// ===== DATA MAPPING =====
+
 const SECTIONS = {
     uk: {
         title: '⚖️ Уголовный кодекс',
@@ -112,7 +112,7 @@ let currentFilter = 'all';
 let searchQuery = '';
 let isGlobalSearch = false;
 
-// ===== ГЛОБАЛЬНЫЙ ПОИСК =====
+
 function performGlobalSearch(query) {
     if (!query || query.trim() === '') {
         isGlobalSearch = false;
@@ -235,7 +235,6 @@ function renderGlobalSearchResults(results, query) {
     filtersBar.style.display = 'none';
     articlesContainer.style.display = 'none';
     
-    // Добавляем обработчики для карточек в результатах поиска
     document.querySelectorAll('#globalSearchList .article-card').forEach(card => {
         card.addEventListener('click', (e) => {
             if (!e.target.closest('.card-header')) return;
@@ -260,7 +259,7 @@ function clearGlobalSearch() {
     render();
 }
 
-// ===== TOGGLE DETAILS =====
+
 function toggleDetails(id) {
     const details = document.getElementById(id);
     if (details) {
@@ -268,7 +267,7 @@ function toggleDetails(id) {
     }
 }
 
-// ===== RENDER FUNCTIONS =====
+
 function render() {
     if (isGlobalSearch) return;
     
@@ -397,13 +396,11 @@ function updateStats(section) {
     statsContainer.innerHTML = html;
 }
 
-// ===== FILTER HANDLER =====
 window.setFilter = function(filter) {
     currentFilter = filter;
     render();
 };
 
-// ===== SECTION CHANGE =====
 function changeSection(sectionId) {
     currentSection = sectionId;
     currentFilter = 'all';
@@ -426,13 +423,11 @@ function changeSection(sectionId) {
     });
 }
 
-// ===== EXPORT GLOBALS =====
 window.toggleDetails = toggleDetails;
 window.setFilter = setFilter;
 window.changeSection = changeSection;
 window.clearGlobalSearch = clearGlobalSearch;
 
-// ===== BUILD SIDEBARS =====
 const NAV_ITEMS = [
     { group: '📚 Кодексы', items: [
         { id: 'uk', icon: '⚖️', name: 'Уголовный кодекс' },
@@ -478,7 +473,6 @@ function buildSidebars() {
     });
 }
 
-// ===== MOBILE MENU =====
 function openMobileMenu() {
     document.getElementById('mobileSidebar').classList.add('open');
     document.getElementById('mobileMenuOverlay').classList.add('open');
@@ -491,7 +485,6 @@ function closeMobileMenu() {
     document.body.style.overflow = '';
 }
 
-// ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
     buildSidebars();
     
@@ -519,7 +512,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
-    // Запускаем рендер начальной секции
     render();
 });
