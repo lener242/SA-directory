@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="app">
-        <!-- Header -->
         <header class="header">
             <div class="header-inner">
                 <div class="header-left">
@@ -36,19 +35,16 @@
         </header>
 
         <div class="layout">
-            <!-- Desktop Sidebar -->
             <aside class="sidebar desktop-only">
                 <nav class="sidebar-nav" id="desktopSidebarNav"></nav>
             </aside>
 
-            <!-- Main Content -->
             <main class="main-content">
                 <div class="content-header">
                     <h2 class="content-title" id="sectionTitle">⚖️ Уголовный кодекс</h2>
                     <div class="stats" id="stats"></div>
                 </div>
 
-                <!-- Глобальный поиск: результаты -->
                 <div id="globalSearchResults" class="global-search-results" style="display: none;">
                     <div class="global-search-header">
                         <span>🔍 Результаты глобального поиска</span>
@@ -57,16 +53,13 @@
                     <div id="globalSearchList" class="articles-list"></div>
                 </div>
 
-                <!-- Фильтры (только для УК) -->
                 <div class="filters-bar" id="filtersBar"></div>
 
-                <!-- Основной список статей -->
                 <div class="articles-list" id="articlesList"></div>
             </main>
         </div>
     </div>
 
-    <!-- Mobile Sidebar (выезжающее меню) -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
     <div class="mobile-sidebar" id="mobileSidebar">
         <div class="mobile-sidebar-header">
@@ -76,7 +69,6 @@
         <nav class="sidebar-nav" id="mobileSidebarNav"></nav>
     </div>
 
-    <!-- Data Scripts (все файлы данных) -->
     <script src="js/data-uk.js"></script>
     <script src="js/data-uk-general.js"></script>
     <script src="js/data-ak.js"></script>
