@@ -1,4 +1,4 @@
-// ===== DATA MAPPING =====
+
 const SECTIONS = {
     uk: {
         title: '⚖️ Уголовный кодекс',
@@ -77,7 +77,7 @@ const SECTIONS = {
     }
 };
 
-// Navigation items
+
 const NAV_ITEMS = [
     { group: '📚 Кодексы', items: [
         { id: 'uk', icon: '⚖️', name: 'Уголовный кодекс' },
@@ -106,7 +106,7 @@ let currentSection = 'uk';
 let currentFilter = 'all';
 let searchQuery = '';
 
-// ===== BUILD SIDEBARS =====
+
 function buildSidebars() {
     const desktopNav = document.getElementById('desktopSidebarNav');
     const mobileNav = document.getElementById('mobileSidebarNav');
@@ -138,7 +138,7 @@ function buildSidebars() {
     });
 }
 
-// ===== MOBILE MENU =====
+
 function openMobileMenu() {
     document.getElementById('mobileSidebar').classList.add('open');
     document.getElementById('mobileMenuOverlay').classList.add('open');
@@ -151,7 +151,7 @@ function closeMobileMenu() {
     document.body.style.overflow = '';
 }
 
-// ===== TOGGLE DETAILS =====
+
 function toggleDetails(cardId) {
     const details = document.getElementById(`details-${cardId}`);
     if (details) {
@@ -159,7 +159,7 @@ function toggleDetails(cardId) {
     }
 }
 
-// ===== RENDER FUNCTIONS =====
+
 function render() {
     const section = SECTIONS[currentSection];
     if (!section) return;
@@ -169,7 +169,7 @@ function render() {
     renderFilters(section);
     updateStats(section);
     
-    // Update active state in navigation
+
     document.querySelectorAll('.nav-item').forEach(btn => {
         btn.classList.remove('active');
         if (btn.dataset.section === currentSection) {
@@ -193,14 +193,14 @@ function renderArticles(section) {
         return;
     }
 
-    // Apply filters (only for UK)
+
     if (section.hasFilters && currentFilter !== 'all') {
         if (currentFilter === 'sud') items = items.filter(i => i.sud);
         else if (currentFilter === 'sh') items = items.filter(i => i.fine);
         else if (currentFilter === '5star') items = items.filter(i => i.stars === '⭐⭐⭐⭐⭐');
     }
 
-    // Search
+
     if (searchQuery) {
         const query = searchQuery.toLowerCase();
         items = items.filter(item => {
@@ -228,7 +228,7 @@ function renderArticles(section) {
         const penalty = item.punishment ? `<span class="card-penalty">⏱️ ${item.punishment}</span>` : '';
         const fine = item.fine ? `<span class="card-fine">💰 ${item.fine}</span>` : '';
         
-        // Build details HTML
+
         let detailsHtml = '';
         
         if (item.fullDesc) {
@@ -342,13 +342,13 @@ function updateStats(section) {
     statsContainer.innerHTML = html;
 }
 
-// ===== FILTER HANDLER =====
+
 window.setFilter = function(filter) {
     currentFilter = filter;
     render();
 };
 
-// ===== SECTION CHANGE =====
+
 function changeSection(sectionId) {
     currentSection = sectionId;
     currentFilter = 'all';
@@ -358,16 +358,16 @@ function changeSection(sectionId) {
     render();
 }
 
-// ===== EXPORT GLOBALS =====
+
 window.toggleDetails = toggleDetails;
 window.setFilter = setFilter;
 
-// ===== INIT =====
+
 document.addEventListener('DOMContentLoaded', () => {
     // Build sidebars
     buildSidebars();
     
-    // Mobile menu handlers
+
     const menuBtn = document.getElementById('menuToggleBtn');
     const closeBtn = document.getElementById('closeSidebarBtn');
     const overlay = document.getElementById('mobileMenuOverlay');
@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeBtn) closeBtn.addEventListener('click', closeMobileMenu);
     if (overlay) overlay.addEventListener('click', closeMobileMenu);
     
-    // Global search
+
     const searchInput = document.getElementById('globalSearch');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -385,6 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Initial render
+
     render();
 });
