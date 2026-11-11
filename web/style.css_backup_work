@@ -35,7 +35,6 @@ body {
     min-height: 100vh;
 }
 
-/* ===== HEADER ===== */
 .header {
     background: var(--bg-surface);
     border-bottom: 1px solid var(--border);
@@ -130,7 +129,6 @@ body {
     box-shadow: 0 0 0 2px rgba(56, 139, 253, 0.2);
 }
 
-/* ===== LAYOUT ===== */
 .layout {
     display: flex;
     flex: 1;
@@ -140,7 +138,6 @@ body {
     padding: 0 20px;
 }
 
-/* ===== DESKTOP SIDEBAR ===== */
 .sidebar {
     width: 280px;
     background: var(--bg-surface);
@@ -155,7 +152,6 @@ body {
     flex-shrink: 0;
 }
 
-/* ===== MOBILE SIDEBAR ===== */
 .mobile-sidebar {
     position: fixed;
     top: 0;
@@ -221,7 +217,6 @@ body {
     display: block;
 }
 
-/* ===== SIDEBAR NAVIGATION ===== */
 .sidebar-nav {
     padding: 8px 0;
 }
@@ -272,7 +267,6 @@ body {
     width: 24px;
 }
 
-/* ===== MAIN CONTENT ===== */
 .main-content {
     flex: 1;
     padding: 20px 0 40px 0;
@@ -312,7 +306,6 @@ body {
     border: 1px solid var(--border);
 }
 
-/* ===== FILTERS ===== */
 .filters-bar {
     display: flex;
     gap: 8px;
@@ -342,7 +335,6 @@ body {
     color: white;
 }
 
-/* ===== ARTICLES LIST ===== */
 .articles-list {
     display: flex;
     flex-direction: column;
@@ -429,7 +421,6 @@ body {
     color: var(--accent-green);
 }
 
-/* ===== DETAILS (раскрывающаяся часть) ===== */
 .card-details {
     display: none;
     padding: 0 16px 16px;
@@ -469,7 +460,6 @@ body {
     margin: 8px 0;
 }
 
-/* ===== АНИМИРОВАННАЯ ГРАДИЕНТНАЯ ОБВОДКА ДЛЯ РАСКРЫТЫХ КАРТОЧЕК ===== */
 @keyframes borderGlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -560,7 +550,6 @@ body {
     color: #10b981;
 }
 
-/* ===== ГЛОБАЛЬНЫЙ ПОИСК ===== */
 .global-search-results {
     margin-bottom: 20px;
 }
@@ -612,7 +601,6 @@ body {
     border-top: 1px dashed var(--border);
 }
 
-/* ===== EMPTY STATE ===== */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -630,7 +618,6 @@ body {
     margin-bottom: 8px;
 }
 
-/* ===== UTILITIES ===== */
 .desktop-only {
     display: block;
 }
@@ -639,7 +626,6 @@ body {
     display: none;
 }
 
-/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -658,7 +644,6 @@ body {
     background: var(--text-muted);
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .header-inner {
         flex-direction: column;
